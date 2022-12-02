@@ -7,18 +7,26 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "transfer_coins": "ts-node src/transfer_coins.ts",
     "create_collection": "ts-node src/create_collection.ts",
-    "mint_nft": "ts-node src/mint_nft.ts"
+    "mint_nft": "ts-node src/mint_nft.ts",
+    "deploy_twt_coin": "ts-node src/deploy_twt_coin.ts",
+    "deploy_counter": "ts-node src/deploy_counter.ts",
+    "omnichain::deploy": "ts-node src/omnichain/deploy.ts",
+    "omnichain::relayer": "ts-node src/omnichain/relayer.ts",
+    "omnichain::bridge": "ts-node src/omnichain/bridge.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@types/prompt-sync": "^4.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
   },
   "dependencies": {
+    "@layerzerolabs/lz-aptos": "^1.0.10",
     "aptos": "^1.3.17",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "prompt-sync": "^4.2.0"
   }
 }
