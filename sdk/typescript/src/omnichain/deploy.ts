@@ -14,6 +14,15 @@ const layerzeroDeployedAddress =
 const coolWalletAddress =
   "0x02a561bd1edff8bf88704d24ec22ae14d979177425eb60e71b2d110fd1c73ce8";
 
+const BSC = {
+  chainId: 10102,
+  address: "3E04bd40C3319de19286846c6fC2df0dce2eb84B",
+};
+const MOONBEAM = {
+  chainId: 10126,
+  address: "F8f20c88A8509f7FEe5F36DB3d37e717Bc9C8583",
+};
+
 // Create a new instance of the aptos client
 const client = new AptosClient(config.network.clientEndpoint);
 const sdk = new lz.SDK({
@@ -50,6 +59,15 @@ const main = async () => {
     console.log("Registering user...");
     await register(deployer).catch(() => console.log("Already registered!"));
   }
+
+  const tx = await counterModule.setRemote(
+    deployer,
+    MOONBEAM.chainId,
+    Uint8Array.from(Buffer.from(MOONBEAM.address, "hex"))
+  );
+
+  await client.waitForTransaction(tx.hash, { checkSuccess: true });
+  console.log(`remote added ${tx.hash}`);
 };
 
 async function publishCoin(account: AptosAccount) {
