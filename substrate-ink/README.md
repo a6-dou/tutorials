@@ -7,3 +7,6 @@
 
 ## Setup your working env
 - [prepare your first contract](https://docs.substrate.io/tutorials/smart-contracts/prepare-your-first-contract/)
+
+## Walk-through
+check this video: https://drive.google.com/file/d/1wQ5FC2cD8kDkv79ImIqp_R0Hzy5602AK/view?usp=share_link
