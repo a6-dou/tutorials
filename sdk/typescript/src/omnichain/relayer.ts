@@ -125,3 +125,34 @@ async function registerRelayer(chainId: number) {
   await sdk.sendAndConfirmTransaction(deployer, registerTx.payload);
 }
 
+async function setRelayerFee(
+  baseFee = 100,
+  feePerByte = 1,
+  chainId: number,
+  remoteChainId: number
+) {
+  const feeConfig = await sdk.LayerzeroModule.Uln.Signer.getFee(
+    deployer.address(),
+    10108
+  );
+  const fee = { baseFee, feePerByte };
+  const needChange =
+    feeConfig.base_fee !== BigInt(fee.baseFee) ||
+    feeConfig.fee_per_byte !== BigInt(fee.feePerByte);
+
+  const payload = sdk.LayerzeroModule.Uln.Signer.setFeePayload(
+    10108,
+    fee.baseFee,
+    fee.feePerByte
+  );
+  const tx: any = {
+    needChange,
+    chainId,
+    module: sdk.LayerzeroModule.Uln.Signer.moduleName,
+    remoteChainId,
+    function: payload.function.split("::")[2],
+    args: payload.arguments,
+    payload,
+  };
+  await sdk.sendAndConfirmTransaction(deployer, tx.payload);
+}
