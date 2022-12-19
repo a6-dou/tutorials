@@ -98,3 +98,30 @@ export function findSecretKeyWithZeroPrefix(length = 0): Uint8Array {
   } while (!address.startsWith(prefix));
   return secretKey;
 }
+
+async function registerRelayer(chainId: number) {
+  const registered = await sdk.LayerzeroModule.Uln.Signer.isRegistered(
+    deployer.address()
+  );
+
+  const registerPayload = sdk.LayerzeroModule.Uln.Signer.registerPayload();
+  const registerTx: any = {
+    needChange: !registered,
+    chainId,
+    module: sdk.LayerzeroModule.Uln.Signer.moduleName,
+    function: registerPayload.function.split("::")[2],
+    args: registerPayload.arguments,
+    registerPayload,
+  };
+  if (registerTx.needChange) {
+    registerTx.diff = {
+      registered: {
+        oldValue: false,
+        newValue: true,
+      },
+    };
+  }
+
+  await sdk.sendAndConfirmTransaction(deployer, registerTx.payload);
+}
+
